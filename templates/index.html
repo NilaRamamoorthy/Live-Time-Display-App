@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Live Time Display</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    #timeBadge {
+      transition: all 0.3s ease-in-out;
+      font-size: 2rem;
+    }
+    #timeBadge.updated {
+      background-color: #0d6efd !important;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+<div class="container py-5 text-center">
+  <h1 class="mb-4">Live Time Display App</h1>
+
+  <!-- Bootstrap Card -->
+  <div class="card shadow-sm d-inline-block">
+    <div class="card-body">
+      <h5 class="card-title">Current Time</h5>
+      <span id="timeBadge" class="badge bg-primary p-3">--:--:--</span>
+    </div>
+  </div>
+</div>
+
+<script>
+async function fetchTime() {
+    const res = await fetch("/api/time");
+    const data = await res.json();
+
+    const timeBadge = document.getElementById("timeBadge");
+    timeBadge.innerText = data.time;
+
+    // Add animation class
+    timeBadge.classList.add("updated");
+    setTimeout(() => timeBadge.classList.remove("updated"), 300);
+}
+
+// Fetch time every second
+setInterval(fetchTime, 1000);
+
+// Initial call
+fetchTime();
+</script>
+
+</body>
+</html>
