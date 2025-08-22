@@ -14,4 +14,4 @@ def get_time():
     return jsonify({"time": now})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
